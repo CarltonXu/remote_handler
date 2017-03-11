@@ -15,16 +15,20 @@
 # configuration file, the file as the first parameter of the #  program, enter
 #
 #####################################################################
-# 
-# How to use script?
-# 
-# such as:
-#     $ python remote_handler.py
-#  [command]>> hostname
-#  localhost: "carltonxu-dev"
-#  127.0.0.1: "carltonxu-dev"
-#  [command]>>
 #
-#    $ python remote_handler.py command_file.txt
-#  
-# 
+# How to use script?
+``` 
+# such as:
+
+First mode:
+root@carltonxu-dev: python remote_handler.py
+[command]>> hostname
+localhost: "carltonxu-dev"
+127.0.0.1: "carltonxu-dev"
+[command]>> 
+
+second mode:
+root@carltonxu-dev:python remote_handler.py command_file.txt
+localhost: "carltonxu-dev"
+127.0.0.1: "carltonxu-dev"
+```  
