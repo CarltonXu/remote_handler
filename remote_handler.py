@@ -49,38 +49,42 @@ class RemoteHandler(Auth):
         return (self.host, result)
 
 
-def get_host():
-    host_list = ['localhost', '127.0.0.1']
-    return host_list
+class RemoteResources():
+    """define remote handler resources"""
+    def __init__(self):
+        self.host_list = self.get_host()
+        self.command = self.get_command()
 
+    def get_host(self):
+        host_list = ['localhost', '127.0.0.1']
+        return host_list
 
-def interactive():
-    count = 1
-    while count:
-        input = raw_input("[command]>> ")
-        if not input:
-            continue
-        return input
-
-
-def read_command_file():
-    command_list = []
-    try:
-        input_file = sys.argv[1]
-    except Exception as err:
-        return command_list
-    else:
-        if not os.path.exists(sys.argv[1]):
-            print "Sorry, %s is not exist" % sys.argv[1]
-            sys.exit(1)
-        with open(sys.argv[1]) as f:
-            for command in f.readlines():
-                command_list.append(command)
+    def get_command(self):
+        command_list = []
+        try:
+            input_file = sys.argv[1]
+        except Exception as err:
             return command_list
+        else:
+            if not os.path.exists(sys.argv[1]):
+                print "Sorry, %s is not exist" % sys.argv[1]
+                sys.exit(1)
+            with open(sys.argv[1]) as f:
+                for command in f.readlines():
+                    command_list.append(command)
+                return command_list
+
+    def interactive(self):
+        count = 1
+        while count:
+            input = raw_input("[command]>> ")
+            if not input:
+                continue
+            return input
 
 
-def main(command):
-    for host in get_host():
+def main(command, host_list):
+    for host in host_list:
         handler = RemoteHandler(host,
                                 username='xuxingzhuang',
                                 password='root123.',
@@ -90,13 +94,15 @@ def main(command):
 
 
 if __name__ == "__main__":
-    command_list = read_command_file()
+    remote_resource = RemoteResources()
+    command_list = remote_resource.command
+    host_list = remote_resource.host_list
     if not len(command_list):
         while 1:
-            command = interactive()
+            command = remote_resource.interactive()
             if command == 'quit' or command == 'exit':
                 sys.exit(0)
-            main(command)
+            main(command, host_list)
     else:
         for command in command_list:
-            main(command)
+            main(command, host_list)

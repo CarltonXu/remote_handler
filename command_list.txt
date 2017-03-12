@@ -1,0 +1,3 @@
+hostname
+ls -ltr
+df -Th
